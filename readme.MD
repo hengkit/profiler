@@ -1,7 +1,7 @@
-#Profiler
+# Profiler
 Currently, only checking for string matches with `stripos` for speed.
 
-##Header Checks
+## Header Checks
 The JSON format for header checks is as follows:
 ```javascript
   "Drupal": {
@@ -12,7 +12,7 @@ The JSON format for header checks is as follows:
 If you only need to check for the existence of the header key then leave the value blank
 If you need to check both header and value, the script will check for the the entire header value for the substring that you put in the value
 
-##Body Checks
+## Body Checks
 ```javascript
   "Google Tag Manager": [
     "googletagmanager.com",
