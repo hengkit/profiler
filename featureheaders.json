@@ -1,0 +1,25 @@
+{
+  "Fastly": {
+    "fastly-debug-digest": ""
+  },
+  "Amazon Cloudfront": {
+    "X-Amz-Cf-Id": ""
+  },
+  "CloudFlare": {
+    "Server": "cloudflare",
+    "cf-ray": ""
+  },
+  "Varnish": {
+    "via": "varnish",
+    "x-varnish":""
+  },
+  "nginx": {
+    "server": "nginx"
+  },
+  "EdgeCast": {
+    "server": "ECS "
+  },
+  "Akamai": {
+    "X-Akamai-Transformed": ""
+  }
+}

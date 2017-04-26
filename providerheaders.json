@@ -1,5 +1,11 @@
 {
-  "Pantheon": "X-Pantheon-Site",
-  "Acquia":"X-AH-Environment",
-  "Automattic":"X-hacker"
+  "Pantheon": {
+    "X-Pantheon-Site": ""
+  },
+  "Acquia": {
+    "X-AH-Environment": ""
+  },
+  "Automattic": {
+    "X-hacker": ""
+  }
 }

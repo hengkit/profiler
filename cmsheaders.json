@@ -1,11 +1,13 @@
 {
   "Drupal": {
-    "x-generator": "Drupal"
+    "x-generator": "Drupal",
+    "x-drupal-cache": ""
   },
   "WordPress": {
-    "X-Generator": "WordPress"
+    "X-Generator": "WordPress",
+    "link": "wp-json"
   },
   "Backdrop": {
-     "X-Generator": "Backdrop"
-    }
+    "X-Generator": "Backdrop"
+  }
 }
