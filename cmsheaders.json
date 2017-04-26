@@ -1,0 +1,11 @@
+{
+  "Drupal": {
+    "x-generator": "Drupal"
+  },
+  "WordPress": {
+    "X-Generator": "WordPress"
+  },
+  "Backdrop": {
+     "X-Generator": "Backdrop"
+    }
+}
