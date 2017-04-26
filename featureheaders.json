@@ -19,6 +19,9 @@
   "EdgeCast": {
     "server": "ECS "
   },
+  "Apache": {
+    "server": "Apache"
+  },
   "Akamai": {
     "X-Akamai-Transformed": ""
   }

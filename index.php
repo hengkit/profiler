@@ -50,12 +50,10 @@ function check_headers($headers,$type){
           array_push($features,$k);
         }
       } else {
-        echo "Key: $k2 , Value:$v2\n";
+        //echo "Key: $k2 , Value:$v2\n";
         //check the key and value of the header
         //should probably use regex instead of stripos
         $respheader = $headers[strtolower($k2)];
-        //print_r($headers);
-        echo "headervalue: $respheader , Value:$v2\n";
         if(stripos($respheader,$v2)!==false){
           array_push($features,$k);
         }
