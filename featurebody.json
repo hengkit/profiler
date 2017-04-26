@@ -1,0 +1,31 @@
+{
+  "Marketo": [
+    "munchkin.marketo.net"
+  ],
+  "Google Tag Manager": [
+    "googletagmanager.com",
+    "googletagservices.com"
+  ],
+  "Google Ad Services": [
+    "googleadservices.com"
+  ],
+  "Google Translate": [
+    "translate.google.com"
+  ],
+  "Olark": [
+    "olark.com"
+  ],
+  "New Relic": [
+    "bam.nr-data.net"
+  ],
+  "Acquia Lift": [
+    "cdn.lift.acquia.com"
+  ],
+  "Cloudfront": [
+    ".cloudfront.net"
+  ],
+  "Optimizely": [
+    "optimizely.com"
+  ]
+
+}

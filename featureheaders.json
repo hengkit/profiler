@@ -22,7 +22,11 @@
   "Apache": {
     "server": "Apache"
   },
+  "IIS": {
+    "server": "IIS"
+  },
   "Akamai": {
-    "X-Akamai-Transformed": ""
+    "X-Akamai-Transformed": "",
+    "server": "AkamaiGHost"
   }
 }

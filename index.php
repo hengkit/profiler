@@ -21,9 +21,34 @@ $headers=parse_headers($header_text);
 //just check the headers first
 $provider = check_headers($headers,"provider");
 $cms = check_headers($headers,"cms");
-$features = check_headers($headers,"feature");
-echo "\n$site is running $cms on $provider with $features\n\n";
+$headerfeatures = check_headers($headers,"feature");
+$bodyfeatures = check_body($body);
+echo "\n$site is running $cms on $provider with $headerfeatures, $bodyfeatures \n\n";
 
+
+
+function check_body($body){
+  $features = array();
+  $file = dirname(__FILE__). "/featurebody.json";
+  $checks=json_decode(file_get_contents($file),true);
+  foreach($checks as $k=>$v){
+    //echo "checking for \n";
+    //print_r($v);
+    foreach($v as $v2){
+      echo "checking for $v2 in body\n";
+      if(stripos($body,$v2)!==false){
+        array_push($features,$k);
+      }
+    }
+  }
+  if (count($features)> 0){
+    $features=array_unique($features,SORT_STRING);
+    $features = implode(", ",$features);
+  } else {
+    $features = "";
+  }
+  return $features;
+}
 function check_headers($headers,$type){
   $features = array();
   switch ($type){
@@ -41,11 +66,10 @@ function check_headers($headers,$type){
   }
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
-    //echo "Key: $k , Value:";
+    echo "Checking for $k in headers\n";
     foreach($v as $k2=>$v2){
       //check only for header existence
       if ($v2 ==""){
-        //echo "Key: $k2 , Value:$v2\n";
         if ($headers[strtolower($k2)]){
           array_push($features,$k);
         }
@@ -54,6 +78,7 @@ function check_headers($headers,$type){
         //check the key and value of the header
         //should probably use regex instead of stripos
         $respheader = $headers[strtolower($k2)];
+
         if(stripos($respheader,$v2)!==false){
           array_push($features,$k);
         }
@@ -63,7 +88,7 @@ function check_headers($headers,$type){
   }
   if (count($features)> 0){
     $features=array_unique($features,SORT_STRING);
-    $features = implode(" ",$features);
+    $features = implode(", ",$features);
   } else {
     $features = "Undetected";
   }
