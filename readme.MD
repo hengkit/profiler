@@ -30,4 +30,7 @@ If you need to check both header and value, the script will check for the the en
  SSL Labs PHP library via [Björn Roland](https://github.com/bjoernr-de/php-ssllabs-api))
 
 ## Performance Check
-Performance Checks are done using sitespeed.io. This must be installed locally currently.
+Performance Checks are done using sitespeed.io. This must be installed locally using `npm`.
+```javascript
+npm install -g sitespeed.io
+```
