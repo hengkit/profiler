@@ -34,3 +34,9 @@ Performance Checks are done using sitespeed.io. This must be installed locally u
 ```bash
 npm install -g sitespeed.io
 ```
+
+## TODO
+1. Stop using separate JSON files
+2. Figure out sitespeed parameters
+3. Create database schema/interface
+4. Webify
