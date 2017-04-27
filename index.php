@@ -1,31 +1,57 @@
 <?php
 //suppress notices because they annoy me
 error_reporting(E_ALL & ~E_NOTICE);
-  require_once 'sslLabsApi.php';
+require_once 'sslLabsApi.php';
 //just the one argument, a URL
 $site= $argv[1];
-//init curl
-$ch = curl_init($site);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//gotta catch those 301s
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_VERBOSE, 0);
-curl_setopt($ch, CURLOPT_HEADER, 1);
-
-$response = curl_exec($ch);
-$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-$header_text = substr($response, 0, $header_size);
-echo "$header_text\n";
-//separate the body from the headers
-$body = substr($response, $header_size);
-$headers=parse_headers($header_text);
-//just check the headers first
-$provider = check_headers($headers,"provider");
-$cms = check_headers($headers,"cms");
-$headerfeatures = check_headers($headers,"feature");
-$bodyfeatures = check_body($body);
-echo "\n$site is running $cms on $provider with $headerfeatures, $bodyfeatures \n\n";
+check_site($site);
 check_ssl($site);
+check_speed($site);
+
+function check_speed($site){
+  if(`which sitespeed.io`){
+    echo "Checking Site Performance\nBrowsers will spawn, Do not be alarmed.\n";
+    $rawresults = `sitespeed.io $site`;
+    $temp = explode("\n",$rawresults);
+    foreach($temp as $line){
+      if(strpos($line,'backEndTime')){
+        $line = preg_replace("/\[.+\] INFO: /","",$line);
+        $results = "Performance Test Results: " . $line. "\n";
+        break;
+      } else {
+        $results = "Performance Test Failed\n";
+      }
+    }
+    echo $results;
+  } else {
+    echo "sitespeed.io not installed. Cannot run performance test\n";
+  }
+}
+
+function check_site($site){
+  //init curl
+  $ch = curl_init($site);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  //gotta catch those 301s
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+  curl_setopt($ch, CURLOPT_VERBOSE, 0);
+  curl_setopt($ch, CURLOPT_HEADER, 1);
+
+  $response = curl_exec($ch);
+  $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+  $header_text = substr($response, 0, $header_size);
+  //echo "$header_text\n";
+  //separate the body from the headers
+  $body = substr($response, $header_size);
+  $headers=parse_headers($header_text);
+  //just check the headers first
+  $provider = check_headers($headers,"provider");
+  $cms = check_headers($headers,"cms");
+  $headerfeatures = check_headers($headers,"feature");
+  $bodyfeatures = check_body($body);
+  echo "\n$site is running $cms on $provider with $headerfeatures, $bodyfeatures \n\n";
+}
+
 
 function check_ssl($host){
   if (substr($host,0,5) == 'https'){
@@ -38,23 +64,24 @@ function check_ssl($host){
     $currentTests = $info["currentAssessments"];
     if ($maxTests > $currentTests){
       echo " - OK\nInitializing Tests\n";
-      $hostinfo = json_decode($api->fetchHostInformation($host),true);
+      $hostinfo = json_decode($api->fetchHostInformation($host,false,false,false,null,'done',false),true);
       $teststatus = $hostinfo['status'];
       echo "Waiting for tests to complete";
       while ($teststatus != "READY"){
 
-        for ($x=1;$x<=6;$x++){
+        for ($x=1;$x<=3;$x++){
           sleep(10);
           echo ".";
         }
 
-        $hostinfo = json_decode($api->fetchHostInformation($host),true);
+        $hostinfo = json_decode($api->fetchHostInformation($host,false,false,false,null,'done',false),true);
         $teststatus = $hostinfo['status'];
       }
     //var_dump($hostinfo);
 
       echo "\nTest Results for ",$hostinfo['host'], "\n";
       foreach ($hostinfo['endpoints'] as $endpoint){
+        //print_r($endpoint);
         if($endpoint['statusMessage'] == "Ready"){
           echo "Endpoint: ", $endpoint['ipAddress']," - ", $endpoint['grade'], "\n";
         }

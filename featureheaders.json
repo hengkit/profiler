@@ -1,35 +1,35 @@
 {
-  "Fastly": {
-    "fastly-debug-digest": ""
+  "Akamai": {
+    "X-Akamai-Transformed": "",
+    "server": "AkamaiGHost"
   },
   "Amazon Cloudfront": {
     "X-Amz-Cf-Id": ""
+  },
+  "Apache": {
+    "server": "Apache"
+  },
+  "Batcache": {
+    "x-nananana": "Batcache"
   },
   "CloudFlare": {
     "Server": "cloudflare",
     "cf-ray": ""
   },
-  "Varnish": {
-    "via": "varnish",
-    "x-varnish":""
-  },
-  "nginx": {
-    "server": "nginx"
-  },
   "EdgeCast": {
     "server": "ECS "
   },
-  "Apache": {
-    "server": "Apache"
+  "Fastly": {
+    "fastly-debug-digest": ""
   },
   "IIS": {
     "server": "IIS"
   },
-  "Batcache": {
-    "x-nananana": "Batcache"
+  "Varnish": {
+    "via": "varnish",
+    "x-varnish": ""
   },
-  "Akamai": {
-    "X-Akamai-Transformed": "",
-    "server": "AkamaiGHost"
+  "nginx": {
+    "server": "nginx"
   }
 }

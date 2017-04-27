@@ -1,34 +1,39 @@
 {
-  "Marketo": [
-    "munchkin.marketo.net"
-  ],
-  "Google Tag Manager": [
-    "googletagmanager.com",
-    "googletagservices.com"
-  ],
-  "Google Ad Services": [
-    "googleadservices.com"
-  ],
-  "Google Translate": [
-    "translate.google.com"
-  ],
-  "Olark": [
-    "olark.com"
-  ],
-  "New Relic": [
-    "bam.nr-data.net"
-  ],
   "Acquia Lift": [
     "cdn.lift.acquia.com"
   ],
   "Cloudfront": [
     ".cloudfront.net"
   ],
+  "Google Ad Services": [
+    "googleadservices.com"
+  ],
+  "Google Tag Manager": [
+    "googletagmanager.com",
+    "googletagservices.com"
+  ],
+  "Google Translate": [
+    "translate.google.com"
+  ],
+  "Gravity Forms": [
+    "/plugins/gravityforms"
+  ],
   "Jetpack": [
     "/plugins/jetpack"
   ],
+  "Marketo": [
+    "munchkin.marketo.net"
+  ],
+  "New Relic": [
+    "bam.nr-data.net"
+  ],
+  "Olark": [
+    "olark.com"
+  ],
   "Optimizely": [
     "optimizely.com"
+  ],
+  "WooCommerce": [
+    "/plugins/woocommerce"
   ]
-
 }
