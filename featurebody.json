@@ -24,6 +24,9 @@
   "Cloudfront": [
     ".cloudfront.net"
   ],
+  "Jetpack": [
+    "/plugins/jetpack"
+  ],
   "Optimizely": [
     "optimizely.com"
   ]

@@ -1,6 +1,7 @@
 <?php
 //suppress notices because they annoy me
 error_reporting(E_ALL & ~E_NOTICE);
+  require_once 'sslLabsApi.php';
 //just the one argument, a URL
 $site= $argv[1];
 //init curl
@@ -24,18 +25,57 @@ $cms = check_headers($headers,"cms");
 $headerfeatures = check_headers($headers,"feature");
 $bodyfeatures = check_body($body);
 echo "\n$site is running $cms on $provider with $headerfeatures, $bodyfeatures \n\n";
+check_ssl($site);
 
+function check_ssl($host){
+  if (substr($host,0,5) == 'https'){
+  //Return API response as JSON string
+    $api = new sslLabsApi();
+    echo "Checking SSL Labs API Status";
+    $info = json_decode($api->fetchApiInfo(),true);
+  //var_dump($info);
+    $maxTests = $info["maxAssessments"];
+    $currentTests = $info["currentAssessments"];
+    if ($maxTests > $currentTests){
+      echo " - OK\nInitializing Tests\n";
+      $hostinfo = json_decode($api->fetchHostInformation($host),true);
+      $teststatus = $hostinfo['status'];
+      echo "Waiting for tests to complete";
+      while ($teststatus != "READY"){
 
+        for ($x=1;$x<=6;$x++){
+          sleep(10);
+          echo ".";
+        }
+
+        $hostinfo = json_decode($api->fetchHostInformation($host),true);
+        $teststatus = $hostinfo['status'];
+      }
+    //var_dump($hostinfo);
+
+      echo "\nTest Results for ",$hostinfo['host'], "\n";
+      foreach ($hostinfo['endpoints'] as $endpoint){
+        if($endpoint['statusMessage'] == "Ready"){
+          echo "Endpoint: ", $endpoint['ipAddress']," - ", $endpoint['grade'], "\n";
+        }
+      }
+    } else {
+      echo " - Not Available\n";
+    }
+  } else {
+    echo "Cannot run SSL Scan on ", $host,"\n";
+  }
+}
 
 function check_body($body){
   $features = array();
   $file = dirname(__FILE__). "/featurebody.json";
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
-    //echo "checking for \n";
+    echo "Checking for $k in body \n";
     //print_r($v);
     foreach($v as $v2){
-      echo "checking for $v2 in body\n";
+      //echo "checking for $v2 in body\n";
       if(stripos($body,$v2)!==false){
         array_push($features,$k);
       }

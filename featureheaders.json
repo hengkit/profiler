@@ -25,6 +25,9 @@
   "IIS": {
     "server": "IIS"
   },
+  "Batcache": {
+    "x-nananana": "Batcache"
+  },
   "Akamai": {
     "X-Akamai-Transformed": "",
     "server": "AkamaiGHost"
