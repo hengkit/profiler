@@ -39,4 +39,5 @@ npm install -g sitespeed.io
 1. Stop using separate JSON files
 2. Figure out sitespeed parameters
 3. Create database schema/interface
-4. Webify
+4. Provide more detailed SSL reports
+5. Webify
