@@ -31,6 +31,6 @@ If you need to check both header and value, the script will check for the the en
 
 ## Performance Check
 Performance Checks are done using sitespeed.io. This must be installed locally using `npm`.
-```javascript
+```bash
 npm install -g sitespeed.io
 ```
