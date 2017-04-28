@@ -5,8 +5,7 @@
   },
   "WordPress": {
     "X-Generator": "WordPress",
-    "link": "wp-json",
-    "link": "//wp.me/"
+    "link": "wp-json|wp\\.me"
   },
   "ASP.NET": {
     "x-powered-by": "ASP.NET"

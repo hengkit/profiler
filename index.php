@@ -1,12 +1,13 @@
 <?php
 //suppress notices because they annoy me
 error_reporting(E_ALL & ~E_NOTICE);
+define("UNDETECTED","Undetected");
 require_once 'sslLabsApi.php';
 //just the one argument, a URL
 $site= $argv[1];
 check_site($site);
-check_ssl($site);
-check_speed($site);
+//check_ssl($site);
+//check_speed($site);
 
 function check_speed($site){
   if(`which sitespeed.io`){
@@ -47,11 +48,17 @@ function check_site($site){
   //just check the headers first
   $provider = check_headers($headers,"provider");
   $cms = check_headers($headers,"cms");
+  if ($cms == "Undetected"){
+    $cms=check_body($body,"cms");
+  }
+  if ($cms=="WordPress" && $provider=="Undetected"){
+    echo "Checking for WP Engine in body\n";
+    $provider = check_body($body,"provider");
+  }
   $headerfeatures = check_headers($headers,"feature");
-  $bodyfeatures = check_body($body);
+  $bodyfeatures = check_body($body,"feature");
   echo "\n$site is running $cms on $provider with $headerfeatures, $bodyfeatures \n\n";
 }
-
 
 function check_ssl($host){
   if (substr($host,0,5) == 'https'){
@@ -93,10 +100,9 @@ function check_ssl($host){
     echo "Cannot run SSL Scan on ", $host,"\n";
   }
 }
-
-function check_body($body){
+function check_body($body,$type){
   $features = array();
-  $file = dirname(__FILE__). "/featurebody.json";
+  $file = dirname(__FILE__). "/".$type ."body.json";
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
     echo "Checking for $k in body \n";
@@ -112,25 +118,14 @@ function check_body($body){
     $features=array_unique($features,SORT_STRING);
     $features = implode(", ",$features);
   } else {
-    $features = "";
+    $features = UNDETECTED;
   }
   return $features;
 }
+
 function check_headers($headers,$type){
   $features = array();
-  switch ($type){
-    case "feature":
-      $file = dirname(__FILE__). "/featureheaders.json";
-      break;
-    case "cms":
-      $file = dirname(__FILE__)."/cmsheaders.json";
-      break;
-    case "provider":
-      $file = dirname(__FILE__)."/providerheaders.json";
-      break;
-    default:
-      $file = dirname(__FILE__)."/providerheaders.json";
-  }
+  $file = dirname(__FILE__). "/".$type ."headers.json";
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
     echo "Checking for $k in headers\n";
@@ -145,8 +140,9 @@ function check_headers($headers,$type){
         //check the key and value of the header
         //should probably use regex instead of stripos
         $respheader = $headers[strtolower($k2)];
-
-        if(stripos($respheader,$v2)!==false){
+        $v2 = "/".$v2."/";
+        //echo "Header Key:$k2, Header Value: $respheader , Value: $v2\n";
+        if(preg_match($v2,$respheader)){
           array_push($features,$k);
         }
       }
@@ -157,7 +153,7 @@ function check_headers($headers,$type){
     $features=array_unique($features,SORT_STRING);
     $features = implode(", ",$features);
   } else {
-    $features = "Undetected";
+    $features = UNDETECTED;
   }
   return $features;
 }

@@ -13,7 +13,7 @@
     "x-nananana": "Batcache"
   },
   "CloudFlare": {
-    "Server": "cloudflare",
+    "Server": "cloudflare-nginx",
     "cf-ray": ""
   },
   "EdgeCast": {
@@ -29,7 +29,10 @@
     "via": "varnish",
     "x-varnish": ""
   },
+  "Sucuri": {
+    "X-Sucuri-ID": ""
+  },
   "nginx": {
-    "server": "nginx"
+    "server": "^nginx"
   }
 }

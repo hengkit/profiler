@@ -1,0 +1,8 @@
+{
+  "WordPress": [
+    "wp-content/themes"
+  ],
+  "Drupal": [
+    "sites/default"
+  ]
+}
