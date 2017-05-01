@@ -15,7 +15,7 @@ The JSON format for header checks is as follows:
   }
 ```
 If you only need to check for the existence of the header key then leave the value blank
-If you need to check both header and value, the script will check for the the entire header value for the substring that you put in the value
+If you need to check both header and value, the script will check for the the entire header value for the regex (without leading and trailing slashes) that you put in the value
 
 ### Body Checks
 ```javascript
@@ -38,6 +38,4 @@ npm install -g sitespeed.io
 ## TODO
 1. Stop using separate JSON files
 2. Figure out sitespeed parameters
-3. Create database schema/interface
-4. Provide more detailed SSL reports
-5. Webify
+3. Webify
