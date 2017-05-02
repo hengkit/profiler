@@ -10,11 +10,12 @@ $password = $argv[2];
 $date = gmdate('Y-m-d H:i:s');
 $api = new sslLabsApi();
 $prime_ssl_check = json_decode($api->fetchHostInformation($host,false,false,false,null,'done',false),true);
-$site_info = check_site($site);
+
 $site_info['date'] = $date;
+$site_info = check_site($site);
+$performance_scores = check_speed($site);
 $ssl_scores = check_ssl($site);
 //$ssl_scores= NULL;
-$performance_scores = check_speed($site);
 write_checks($site_info,$ssl_scores,$performance_scores);
 
 function write_checks($site,$ssl_scores,$performance_scores){
@@ -22,7 +23,7 @@ function write_checks($site,$ssl_scores,$performance_scores){
   //echo "\n\n";
   $servername = "localhost";
   $username = "root";
-  $dbname = "profile";
+  $dbname = "profiler";
   global $password;
 // Create connection
   $conn = mysqli_connect($servername, $username, $password,$dbname);
@@ -77,7 +78,7 @@ function write_checks($site,$ssl_scores,$performance_scores){
 }
 function check_speed($site){
   $results = array();
-  $runs = 2;
+  $runs = 3;
   if(`which sitespeed.io`){
     echo "Checking Site Performance\nBrowsers will spawn, Do not be alarmed.\n";
     $rawresults = `sitespeed.io $site -n $runs`;
@@ -158,7 +159,7 @@ function check_site($site){
     $features=array_unique($site_info['features'],SORT_STRING);
     $features = implode(", ",$features);
   }
-  echo "\n$site is running $cms on $provider with $features \n\n";
+  //echo "\n$site is running $cms on $provider with $features \n\n";
   return $site_info;
 }
 
@@ -189,7 +190,7 @@ function check_ssl($host){
       }
     //var_dump($hostinfo);
 
-      echo "\nTest Results for ",$hostinfo['host'], "\n";
+      //echo "\nTest Results for ",$hostinfo['host'], "\n";
       foreach ($hostinfo['endpoints'] as $endpoint){
         //print_r($endpoint);
         if($endpoint['statusMessage'] == "Ready"){

@@ -3,6 +3,7 @@
 1. Checks site features via header and body heuristics
 2. Checks Security using [SSL Labs API](https://www.ssllabs.com/projects/ssllabs-apis/)
 3. Checks performance using [sitespeed.io](https://github.com/sitespeedio/sitespeed.io/)
+4. Writes results to MySQL database (see profiler.sql file for schema)
 
 ## Feature Checks
 Feature checks may be added to the JSON files.
