@@ -3,9 +3,13 @@
 error_reporting(E_ALL & ~E_NOTICE);
 define("UNDETECTED","Undetected");
 require_once 'sslLabsApi.php';
-//just the one argument, a URL
+//first argument, a URL
 $site= $argv[1];
+$password = $argv[2];
+
 $date = gmdate('Y-m-d H:i:s');
+$api = new sslLabsApi();
+$prime_ssl_check = json_decode($api->fetchHostInformation($host,false,false,false,null,'done',false),true);
 $site_info = check_site($site);
 $site_info['date'] = $date;
 $ssl_scores = check_ssl($site);
@@ -18,8 +22,8 @@ function write_checks($site,$ssl_scores,$performance_scores){
   //echo "\n\n";
   $servername = "localhost";
   $username = "root";
-  $password = "beeblebrox";
   $dbname = "profile";
+  global $password;
 // Create connection
   $conn = mysqli_connect($servername, $username, $password,$dbname);
   if ($conn->connect_error) {
@@ -49,7 +53,7 @@ function write_checks($site,$ssl_scores,$performance_scores){
         }
       }
       if (count($performance_scores)>0){
-        print_r($performance_scores);
+        //print_r($performance_scores);
         $fields="";
         $param="";
         if ($performance_scores['runs'] > 1){
@@ -60,6 +64,7 @@ function write_checks($site,$ssl_scores,$performance_scores){
           $fields = "site_id," . rtrim($fields,",");
           $param  = $site_id . ",".rtrim($param,",");
           $sql = "INSERT INTO PERFORMANCE (" . $fields . ") VALUES (" . $param . ")";
+          $conn->query($sql);
         }
       }
 
@@ -189,7 +194,7 @@ function check_ssl($host){
         //print_r($endpoint);
         if($endpoint['statusMessage'] == "Ready"){
           $endpoint_scores[$endpoint['ipAddress']] = $endpoint['grade'];
-          echo "Endpoint: ", $endpoint['ipAddress']," - ", $endpoint['grade'], "\n";
+          //echo "Endpoint: ", $endpoint['ipAddress']," - ", $endpoint['grade'], "\n";
         }
       }
     } else {
