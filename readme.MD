@@ -5,6 +5,17 @@
 3. Checks performance using [sitespeed.io](https://github.com/sitespeedio/sitespeed.io/)
 4. Writes results to MySQL database (see profiler.sql file for schema)
 
+## Installation
+
+1. Install PHP. (I use homebrew and 5.6, anything should work)
+2. Install [MySQL](https://dev.mysql.com/downloads/mysql/)
+3. Install [Node.js](https://nodejs.org/en/download/)
+4. Install sitespeed.io
+```bash
+npm install -g sitespeed.io
+```
+5. Clone this repo.
+
 ## Feature Checks
 Feature checks may be added to the JSON files.
 ### Header Checks
