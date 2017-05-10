@@ -10,13 +10,13 @@ $password = $argv[2];
 $date = gmdate('Y-m-d H:i:s');
 $api = new sslLabsApi();
 $prime_ssl_check = json_decode($api->fetchHostInformation($host,false,false,false,null,'done',false),true);
-
-$site_info['date'] = $date;
 $site_info = check_site($site);
-$performance_scores = check_speed($site);
+$site_info['date'] = $date;
+$perf = check_browsertime($site);
 $ssl_scores = check_ssl($site);
 //$ssl_scores= NULL;
-write_checks($site_info,$ssl_scores,$performance_scores);
+write_checks($site_info,$ssl_scores,$perf);
+
 
 function write_checks($site,$ssl_scores,$performance_scores){
   //print_r($site);
@@ -25,12 +25,13 @@ function write_checks($site,$ssl_scores,$performance_scores){
   $username = "root";
   $dbname = "profiler";
   global $password;
+
 // Create connection
   $conn = mysqli_connect($servername, $username, $password,$dbname);
   if ($conn->connect_error) {
       die("Connection failed: " . $conn->connect_error);
   }
-  $stmt = $conn->prepare("INSERT INTO site (date, url,provider, cms) VALUES (?,?,?,?)" );
+  $stmt = $conn->prepare("INSERT INTO site (test_date, url,provider, cms) VALUES (?,?,?,?)" );
   $stmt->bind_param("ssss",$site['date'],$site['site'],$site['provider'],$site['cms']);
 
   if ($stmt->execute() === TRUE) {
@@ -64,7 +65,8 @@ function write_checks($site,$ssl_scores,$performance_scores){
           }
           $fields = "site_id," . rtrim($fields,",");
           $param  = $site_id . ",".rtrim($param,",");
-          $sql = "INSERT INTO PERFORMANCE (" . $fields . ") VALUES (" . $param . ")";
+          $sql = "INSERT INTO performance (" . $fields . ") VALUES (" . $param . ")";
+          echo $sql,"\n";
           $conn->query($sql);
         }
       }
@@ -75,6 +77,31 @@ function write_checks($site,$ssl_scores,$performance_scores){
   $stmt->close();
   $conn->close();
   return 1;
+}
+function check_browsertime($site){
+  $results = array();
+  if(`which browsertime`){
+    echo "Checking Site Performance\nBrowsers will spawn, Do not be alarmed.\n";
+    $btime = exec('browsertime -n 3 ' . $site);
+    preg_match('/Wrote data to (.+)/',$btime,$resultdir);
+    $resultfile = __DIR__ . "/" . $resultdir[1] . "/browsertime.json";
+    $data=json_decode(file_get_contents($resultfile),true);
+    //echo $resultfile, "\n";
+    $results['firstPaint'] = $data['statistics']['timings']['firstPaint']['median'];
+    $results['rumSpeedIndex'] =  $data['statistics']['timings']['rumSpeedIndex']['median'];
+    $results['pageLoad'] = $data['statistics']['timings']['pageTimings']['pageLoadTime']['median'];
+    $results['backEnd'] = $data['statistics']['timings']['pageTimings']['backEndTime']['median'];
+    $results['domContentLoaded'] = $data['statistics']['timings']['pageTimings']['domContentLoadedTime']['median'];
+    $results['runs']=count($data['timestamps']);
+    echo "firstPaint: ", $data['statistics']['timings']['firstPaint']['median'], "\n";
+    echo "rumSpeedIndex: ", $data['statistics']['timings']['rumSpeedIndex']['median'], "\n";
+    echo "pageLoadTime: ", $data['statistics']['timings']['pageTimings']['pageLoadTime']['median'], "\n";
+    echo "backEndTime: ", $data['statistics']['timings']['pageTimings']['backEndTime']['median'], "\n";
+    echo "domContentLoadedTime: ", $data['statistics']['timings']['pageTimings']['domContentLoadedTime']['median'], "\n";
+    echo "runs: ",count($data['timestamps']), "\n";
+
+  }
+  return $results;
 }
 function check_speed($site){
   $results = array();

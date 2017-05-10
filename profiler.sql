@@ -26,20 +26,13 @@ CREATE TABLE `performance` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `site_id` int(11) DEFAULT NULL,
   `runs` float DEFAULT NULL,
-  `requests` float DEFAULT NULL,
-  `size` float DEFAULT NULL,
-  `backendtime` float DEFAULT NULL,
-  `backendtime_deviation` float DEFAULT NULL,
+  `backend` float DEFAULT NULL,
   `firstpaint` float DEFAULT NULL,
-  `firstpaint_deviation` float DEFAULT NULL,
   `domcontentloaded` float DEFAULT NULL,
-  `domcontentloaded_deviation` float DEFAULT NULL,
   `pageload` float DEFAULT NULL,
-  `pageload_deviation` float DEFAULT NULL,
   `rumspeedindex` float DEFAULT NULL,
-  `rumspeedindex_deviation` float DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +60,7 @@ DROP TABLE IF EXISTS `site`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `site` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `date` datetime DEFAULT NULL,
+  `test_date` datetime DEFAULT NULL,
   `provider` varchar(50) DEFAULT NULL,
   `cms` varchar(50) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
