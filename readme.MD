@@ -10,9 +10,9 @@
 1. Install PHP (I use homebrew and 5.6, anything should work)
 2. Install [MySQL](https://dev.mysql.com/downloads/mysql/)
 3. Install [Node.js](https://nodejs.org/en/download/)
-4. Install sitespeed.io
+4. Install Browsertime
 ```bash
-npm install -g sitespeed.io
+npm install -g browsertime
 ```
 5. Clone this repo.
 
