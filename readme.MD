@@ -15,6 +15,10 @@
 npm install -g browsertime
 ```
 5. Clone this repo.
+6. Create database and create tables using profiler.sql 
+```
+
+```
 
 ## Feature Checks
 Feature checks may be added to the JSON files.

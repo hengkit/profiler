@@ -8,10 +8,10 @@ DROP TABLE IF EXISTS `features`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `features` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site_id` int(11) DEFAULT NULL,
+  `test_id` int(11) DEFAULT NULL,
   `feature` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `site_id` (`site_id`)
+  KEY `test_id` (`test_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `performance`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `performance` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site_id` int(11) DEFAULT NULL,
+  `test_id` int(11) DEFAULT NULL,
   `runs` float DEFAULT NULL,
   `backend` float DEFAULT NULL,
   `firstpaint` float DEFAULT NULL,
@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `security`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `security` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `site_id` int(11) DEFAULT NULL,
+  `test_id` int(11) DEFAULT NULL,
   `endpoint` varchar(100) DEFAULT NULL,
   `score` char(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
