@@ -1,6 +1,6 @@
 {
   "Pantheon": {
-    "X-Pantheon-Site": ""
+    "x-pantheon-styx-hostname": ""
   },
   "Acquia": {
     "X-AH-Environment": ""

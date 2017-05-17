@@ -1,4 +1,6 @@
 <?php
+
+
 function write_checks($site,$ssl_scores,$performance_scores){
 
   $servername = "localhost";
@@ -171,7 +173,7 @@ function check_site($site){
 }
 
 function check_ssl($host){
-  if (substr($host,0,5) == 'https'){
+  //if (substr($host,0,5) == 'https'){
     $endpoint_scores = array();
   //Return API response as JSON string
     $api = new sslLabsApi();
@@ -192,9 +194,9 @@ function check_ssl($host){
         }
       }
     }
-  } else {
-    echo "Cannot run SSL Scan on ", $host,"\n";
-  }
+//  } else {
+//    echo "Cannot run SSL Scan on ", $host,"\n";
+//  }
   return $endpoint_scores;
 }
 function check_body($body,$type){
