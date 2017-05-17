@@ -5,13 +5,8 @@ require_once(__DIR__.'/checks.php');
 require_once(__DIR__.'/sslLabsApi.php');
 define("UNDETECTED","Undetected");
 
-if (empty($_POST)){
-  echo "<form action=", htmlspecialchars($_SERVER["PHP_SELF"])," method=\"post\">";
-  echo "Site: <input type=\"text\" name=\"site\"><br>";
-  echo " <input type=\"submit\"></form>";
-} else {
   //first argument, a URL
-  $site= $_POST['site'];
+  $site= $argv[1];
   $password = "beeblebrox";
 
   $date = gmdate('Y-m-d H:i:s');
@@ -22,5 +17,3 @@ if (empty($_POST)){
   $perf = check_browsertime($site);
   $ssl_scores = check_ssl($site);
   write_checks($site_info,$ssl_scores,$perf);
-
-}
