@@ -1,5 +1,29 @@
 <?php
 
+function gsheet_append($site,$perf,$ssl){
+  require_once __DIR__ . '/vendor/autoload.php';
+  date_default_timezone_set("UTC");
+  putenv("GOOGLE_APPLICATION_CREDENTIALS=". __DIR__ . "/client_secret.json");
+  define('SCOPES', implode(' ', array(Google_Service_Sheets::SPREADSHEETS)));
+  $conf = ["valueInputOption" => "RAW"];
+  $spreadsheetId = "1-bSPqo_BJc9xQ7SqpUmvZK7iG58lbIi5H_HIRYKNnco";
+  $range="data";
+
+  $values = array_values($site);
+  $values = array_merge($values,array_values($perf));
+  $values[] =json_encode($ssl);
+  $valueHash['values'] = $values;
+  $client = new Google_Client();
+  $client->useApplicationDefaultCredentials();
+  $client->setScopes(SCOPES);
+  $service = new Google_Service_Sheets($client);
+
+  $valueRange= new Google_Service_Sheets_ValueRange();
+  $valueRange->setValues($valueHash);
+
+  $response = $service->spreadsheets_values->append($spreadsheetId,$range,$valueRange,$conf);
+  print_r($response);
+  }
 
 function write_checks($site,$ssl_scores,$performance_scores){
 
@@ -168,11 +192,15 @@ function check_site($site){
   if (count($site_info['features'])> 0){
     $features=array_unique($site_info['features'],SORT_STRING);
     $features = implode(", ",$features);
+    //normalize for google docs
+    $site_info['features'] = $features;
   }
+
   return $site_info;
 }
 
 function check_ssl($host){
+
   //if (substr($host,0,5) == 'https'){
     $endpoint_scores = array();
   //Return API response as JSON string
@@ -201,7 +229,7 @@ function check_ssl($host){
 }
 function check_body($body,$type){
   $features = array();
-  $file = dirname(__FILE__). "/".$type ."body.json";
+  $file = dirname(__FILE__). "/checks/".$type ."body.json";
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
     foreach($v as $v2){
@@ -221,7 +249,7 @@ function check_body($body,$type){
 
 function check_headers($headers,$type){
   $features = array();
-  $file = dirname(__FILE__). "/".$type ."headers.json";
+  $file = dirname(__FILE__). "/checks/".$type ."headers.json";
   $checks=json_decode(file_get_contents($file),true);
   foreach($checks as $k=>$v){
     foreach($v as $k2=>$v2){

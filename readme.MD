@@ -8,16 +8,20 @@
 ## Installation
 
 1. Install PHP (I use homebrew and 5.6, anything should work)
-2. Install [MySQL](https://dev.mysql.com/downloads/mysql/)
+2. Install [Composer](https://getcomposer.org/doc/00-intro.md#installation-linux-unix-osx)
 3. Install [Node.js](https://nodejs.org/en/download/)
 4. Install Browsertime
 ```bash
 npm install -g browsertime
 ```
 5. Clone this repo.
-6. Create database and create tables using profiler.sql
+6. Install Dependencies (Google Docs Client)
+```bash
+composer install
 ```
-
+7. Run the script.
+```bash
+php cli.php https://samplesite.com
 ```
 
 ## Feature Checks
@@ -30,8 +34,8 @@ The JSON format for header checks is as follows:
     "x-drupal-cache": ""
   }
 ```
-If you only need to check for the existence of the header key then leave the value blank
-If you need to check both header and value, the script will check for the the entire header value for the regex (without leading and trailing slashes) that you put in the value
+* If you only need to check for the existence of the header key then leave the value blank
+* If you need to check both header and value, the script will check for the the entire header value for the regex (without leading and trailing slashes) that you put in the value
 
 ### Body Checks
 ```javascript
@@ -48,12 +52,9 @@ If you need to check both header and value, the script will check for the the en
 ### Scores
 The letter grade that is assigned by SSL Labs is a pretty involved [formula](https://github.com/ssllabs/research/wiki/SSL-Server-Rating-Guide)
 #### tl;dr
-If your site is susceptible to any known HTTPS attacks, weak ciphers or vulnerabilities, it is capped at a B but most likely will score lower.
-An A+ is achievable on Pantheon using our free HTTPS service AND setting up [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
-An A is the default score for Pantheon sites using the free HTTPS service.
-
-
-
+* If your site is susceptible to any known HTTPS attacks, weak ciphers or vulnerabilities, it is capped at a B but most likely will score lower.
+* An A+ is achievable on Pantheon using our free HTTPS service AND setting up [HSTS](https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security).
+* An A is the default score for Pantheon sites using the free HTTPS service.
 
 ## Performance Check
 Performance Checks are done using browsertime. This must be installed locally using `npm`.

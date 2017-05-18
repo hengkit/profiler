@@ -1,4 +1,5 @@
 <?php
+//DON'T USE THIS, IT'S CRAP
 //suppress notices because they annoy me
 error_reporting(E_ALL & ~E_NOTICE);
 require_once(__DIR__.'/checks.php');
