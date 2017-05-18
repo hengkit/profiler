@@ -3,7 +3,7 @@
 1. Checks site features via header and body heuristics
 2. Checks Security using [SSL Labs API](https://www.ssllabs.com/projects/ssllabs-apis/)
 3. Checks performance using [Browsertime](https://github.com/sitespeedio/browsertime)
-4. Writes results to MySQL database (see profiler.sql file for schema)
+4. Writes results to Google Docs (setup required)
 
 ## Installation
 
@@ -19,7 +19,8 @@ npm install -g browsertime
 ```bash
 composer install
 ```
-7. Run the script.
+7. Get the google credentials file from a yet to be determined source.
+8. Run the script.
 ```bash
 php cli.php https://samplesite.com
 ```
@@ -81,3 +82,4 @@ We use a real browser to calculate your speed index. It's based on what your bro
 1. Stop using separate JSON files
 2. So much error checking
 3. Webify
+4. Figure out how to multithread browsertime without it nerfing
