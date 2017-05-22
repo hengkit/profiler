@@ -5,7 +5,11 @@
   "Acquia": {
     "X-AH-Environment": ""
   },
+  "Flywheel": {
+    "Server": "Flywheel"
+  },
   "Automattic": {
     "X-hacker": ""
   }
+
 }
