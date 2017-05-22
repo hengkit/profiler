@@ -6,12 +6,18 @@ function gsheet_append($site,$perf,$ssl){
   putenv("GOOGLE_APPLICATION_CREDENTIALS=". __DIR__ . "/client_secret.json");
   define('SCOPES', implode(' ', array(Google_Service_Sheets::SPREADSHEETS)));
   $conf = ["valueInputOption" => "RAW"];
-  $spreadsheetId = "1-bSPqo_BJc9xQ7SqpUmvZK7iG58lbIi5H_HIRYKNnco";
-  $range="data";
+//TEST DATA
+//  $spreadsheetId = "1-bSPqo_BJc9xQ7SqpUmvZK7iG58lbIi5H_HIRYKNnco";
+//  $range="data";
+  //LIVE
+  $spreadsheetId = "1yUipxUpW0BDOlL6ZiHlZU2RzSR5k7z1TebQ7wj_Fldw";
+  $range="Data";
 
   $values = array_values($site);
   $values = array_merge($values,array_values($perf));
-  $values[] =json_encode($ssl);
+
+  $ssljson = preg_replace("/\{|\}|\"/","",json_encode($ssl));
+  $values[] =$ssljson;
   $valueHash['values'] = $values;
   $client = new Google_Client();
   $client->useApplicationDefaultCredentials();
@@ -22,7 +28,7 @@ function gsheet_append($site,$perf,$ssl){
   $valueRange->setValues($valueHash);
 
   $response = $service->spreadsheets_values->append($spreadsheetId,$range,$valueRange,$conf);
-  print_r($response);
+  //print_r($response);
   }
 
 function write_checks($site,$ssl_scores,$performance_scores){
