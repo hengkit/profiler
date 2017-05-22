@@ -172,7 +172,7 @@ function check_site($site){
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
   curl_setopt($ch, CURLOPT_VERBOSE, 0);
   curl_setopt($ch, CURLOPT_HEADER, 1);
-
+curl_setopt($ch,CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36');
   $response = curl_exec($ch);
   $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
   $header_text = substr($response, 0, $header_size);
@@ -182,10 +182,12 @@ function check_site($site){
   //just check the headers first
   $provider = check_headers($headers,"provider");
   $cms = check_headers($headers,"cms");
-  if ($cms == "Undetected"){
+  if ($cms[0] == "Undetected"){
     $cms=check_body($body,"cms");
+
   }
-  if ($cms=="WordPress" && $provider=="Undetected"){
+
+  if ($cms[0]=="WordPress" && $provider=="Undetected"){
     $provider = check_body($body,"provider");
   }
   $headerfeatures = check_headers($headers,"feature");
@@ -241,6 +243,7 @@ function check_body($body,$type){
     foreach($v as $v2){
       if(stripos($body,$v2)!==false){
         array_push($features,$k);
+
       }
     }
   }
