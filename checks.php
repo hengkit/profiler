@@ -195,7 +195,11 @@ curl_setopt($ch,CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12
   $site_info['site'] = $site;
   $site_info['cms'] = $cms[0];
   $site_info['provider'] = $provider[0];
+  if ($site_info['provider'] == "Flywheel"){
+    array_push($headerfeatures,"nginx","Varnish");
+  }
   $site_info['features'] = $headerfeatures + $bodyfeatures;
+
   $site_info['ip'] = gethostbyname(parse_url($site,PHP_URL_HOST).'.');
   if (count($site_info['features'])> 0){
     $features=array_unique($site_info['features'],SORT_STRING);
