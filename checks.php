@@ -107,7 +107,7 @@ function display_checks($testid){
 function check_browsertime($site){
   $results = array();
   if(`which browsertime`){
-    $btime = exec('browsertime -n 3 ' . $site);
+    $btime = exec('browsertime -n 3 --connectivity.profile cable ' . $site);
     preg_match('/Wrote data to (.+)/',$btime,$resultdir);
     $resultfile = __DIR__ . "/" . $resultdir[1] . "/browsertime.json";
     $data=json_decode(file_get_contents($resultfile),true);
