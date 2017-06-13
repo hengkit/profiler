@@ -183,12 +183,13 @@ curl_setopt($ch,CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12
   $provider = check_headers($headers,"provider");
   $cms = check_headers($headers,"cms");
   if ($cms[0] == "Undetected"){
+
     $cms=check_body($body,"cms");
 
   }
 
-  if ($cms[0]=="WordPress" && $provider=="Undetected"){
-    $provider = check_body($body,"provider");
+  if ($cms[0]=="WordPress" && $provider[0]=="Undetected"){
+      $provider = check_body($body,"provider");
   }
   $headerfeatures = check_headers($headers,"feature");
   $bodyfeatures = check_body($body,"feature");
