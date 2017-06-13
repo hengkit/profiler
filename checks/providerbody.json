@@ -1,5 +1,6 @@
 {
   "WP Engine": [
-    "wpengine.netdna-cdn.com"
+    "wpengine.netdna-cdn.com",
+    "wpengine.netdna-ssl.com"
   ]
 }

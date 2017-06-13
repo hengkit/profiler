@@ -34,7 +34,8 @@
     "optimizely.com"
   ],
   "MaxCDN/NetDNA": [
-    "netdna-cdn.com"
+    "netdna-cdn.com",
+    "netdna-ssl.com"
   ],
   "WooCommerce": [
     "/plugins/woocommerce"
