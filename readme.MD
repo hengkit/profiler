@@ -4,6 +4,17 @@
 2. Checks Security using [SSL Labs API](https://www.ssllabs.com/projects/ssllabs-apis/)
 3. Checks performance using [Browsertime](https://github.com/sitespeedio/browsertime)
 4. Writes results to Google Docs (setup required)
+5. Added independent script (fancycert.php) to analyze TLS certs for EV, wildcard or SAN status.
+
+## Fancy Cert checking
+
+1. Make sure you have openssl > 1.0 installed.
+2. Add domains or IPs with TLS certs to be tested to list.txt. One host per line, please.
+3. Execute fancycert.php
+```bash
+php fancycert.php
+```
+
 
 ## Installation
 
